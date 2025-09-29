@@ -7,8 +7,8 @@ Dockerfile
 venv/
 __pycache__/
 *.pyc
-models/
-outputs/
-tmp/
+/models/
+/outputs/
+/tmp/
 frontend/node_modules/
 frontend/dist/
