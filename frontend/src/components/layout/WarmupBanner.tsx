@@ -1,7 +1,5 @@
-import type { ReadyState } from '@/types';
-
 interface WarmupBannerProps {
-  ready: ReadyState;
+  ready: boolean;
   warming: boolean;
   onWarmup: () => void;
 }
@@ -10,9 +8,9 @@ export function WarmupBanner({ ready, warming, onWarmup }: WarmupBannerProps) {
   return (
     <div className="max-w-3xl mx-auto mb-6 p-4 rounded-lg bg-yellow-500/10 border border-yellow-500/40 text-yellow-200 text-sm flex items-center justify-between">
       <div>
-        <strong>Warming up models…</strong> This is only needed after a restart.
+        <strong>Warming up model…</strong> This is only needed after a restart.
         <div className="text-xs opacity-80 mt-1">
-          Image ready: {String(ready.image)} • Video ready: {String(ready.video)}
+          Model ready: {ready ? 'Yes' : 'Loading...'}
         </div>
       </div>
       <button

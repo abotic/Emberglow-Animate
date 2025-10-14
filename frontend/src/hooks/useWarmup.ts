@@ -1,18 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { apiClient } from '@/services/api.client';
-import type { ReadyState } from '@/types';
 import { API_CONFIG } from '@/constants';
 
 interface ApiReadyResponse {
-  ready: ReadyState;
+  ready: boolean;
 }
 
 export function useWarmup() {
-  const [ready, setReady] = useState<ReadyState>({
-    image: false,
-    video: false,
-    all: false,
-  });
+  const [ready, setReady] = useState(false);
+  const [videoEnabled, setVideoEnabled] = useState(false);
   const [warming, setWarming] = useState(false);
   const pollIntervalRef = useRef<NodeJS.Timeout>();
 
@@ -22,7 +18,7 @@ export function useWarmup() {
         const response = await apiClient.get<ApiReadyResponse>('/api/ready');
         setReady(response.ready);
         
-        if (response.ready.all && pollIntervalRef.current) {
+        if (response.ready && pollIntervalRef.current) {
           clearInterval(pollIntervalRef.current);
           pollIntervalRef.current = undefined;
         }
@@ -31,7 +27,17 @@ export function useWarmup() {
       }
     };
 
+    const checkVideo = async () => {
+      try {
+        await apiClient.get('/api/video/job/test');
+        setVideoEnabled(true);
+      } catch {
+        setVideoEnabled(false);
+      }
+    };
+
     checkReady();
+    checkVideo();
     pollIntervalRef.current = setInterval(checkReady, API_CONFIG.POLL_INTERVAL);
 
     return () => {
@@ -52,8 +58,9 @@ export function useWarmup() {
 
   return {
     ready,
+    videoEnabled,
     warming,
     startWarmup,
-    disabled: !ready.all || warming,
+    disabled: !ready || warming,
   };
 }

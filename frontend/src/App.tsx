@@ -9,14 +9,14 @@ import { VideoGenerator } from './components/VideoGenerator';
 
 export function App() {
   const [activeTab, setActiveTab] = useState<'image' | 'video'>('image');
-  const { ready, warming, startWarmup, disabled } = useWarmup();
+  const { ready, warming, startWarmup, disabled, videoEnabled } = useWarmup();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-gray-200">
       <div className="container mx-auto px-4 py-8 md:py-12">
         <Header />
         
-        {!ready.all && (
+        {!ready && (
           <WarmupBanner
             ready={ready}
             warming={warming}
@@ -24,13 +24,15 @@ export function App() {
           />
         )}
 
-        <TabNavigation 
-          activeTab={activeTab} 
-          onTabChange={setActiveTab} 
-        />
+        {videoEnabled && (
+          <TabNavigation 
+            activeTab={activeTab} 
+            onTabChange={setActiveTab} 
+          />
+        )}
 
         <div className="max-w-4xl mx-auto">
-          {activeTab === 'image' ? (
+          {activeTab === 'image' || !videoEnabled ? (
             <ImageGenerator disabled={disabled} />
           ) : (
             <VideoGenerator disabled={disabled} />

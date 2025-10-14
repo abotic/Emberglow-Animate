@@ -2,10 +2,11 @@ import os
 import tempfile
 import subprocess
 import asyncio
-from typing import List, Tuple
+from typing import List
 from PIL import Image
 import io
 from ..core.logging import get_logger
+
 
 class VideoProcessor:
     def __init__(self, output_dir: str, temp_dir: str):
@@ -30,9 +31,7 @@ class VideoProcessor:
         
         try:
             await self._encode_frames(frames, fps, temp_path)
-            
             await self._loop_video(temp_path, final_path, duration_minutes)
-            
             return final_path
         finally:
             if os.path.exists(temp_path):
@@ -68,7 +67,9 @@ class VideoProcessor:
     
     async def _run_ffmpeg(self, cmd: List[str]):
         loop = asyncio.get_running_loop()
-        proc = await loop.run_in_executor(None, subprocess.run, cmd, 
-                                          {"capture_output": True, "text": True})
+        proc = await loop.run_in_executor(
+            None,
+            lambda: subprocess.run(cmd, capture_output=True, text=True)
+        )
         if proc.returncode != 0:
             raise RuntimeError(f"FFmpeg failed: {proc.stderr}")

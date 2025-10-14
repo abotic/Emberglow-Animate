@@ -3,6 +3,7 @@ import asyncio
 from typing import Optional, List, Tuple
 from PIL import Image
 import numpy as np
+
 try:
     import cv2
     HAS_CV2 = True
@@ -14,6 +15,7 @@ from ..core.config import get_settings
 from ..core.device import DeviceManager
 from ..core.exceptions import ModelLoadError, GenerationError
 from .base import BaseModelManager
+
 
 class VideoModelManager(BaseModelManager):
     def __init__(self, hf_token: Optional[str] = None):
@@ -31,10 +33,7 @@ class VideoModelManager(BaseModelManager):
             loop = asyncio.get_running_loop()
             
             try:
-                self.pipe = await loop.run_in_executor(
-                    None,
-                    lambda: self._load_pipeline()
-                )
+                self.pipe = await loop.run_in_executor(None, self._load_pipeline)
             except Exception as e:
                 raise ModelLoadError(f"Failed to load video model: {e}")
     

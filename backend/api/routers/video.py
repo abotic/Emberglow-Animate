@@ -1,8 +1,8 @@
 import asyncio
+import os
 from fastapi import APIRouter, UploadFile, File, Query, HTTPException, Depends
 from fastapi.responses import JSONResponse
 from typing import Optional
-import os
 
 from ...models.schemas import VideoGenerationOptions
 from ...models.video_model import VideoModelManager
@@ -12,6 +12,7 @@ from ...core.config import get_settings
 from ..dependencies import require_api_key
 
 router = APIRouter(prefix="/api/video", tags=["video"])
+
 
 class VideoGenerator:
     def __init__(self):
@@ -70,13 +71,11 @@ class VideoGenerator:
                 }
             )
         except Exception as e:
-            job_service.update_job(
-                job_id,
-                status=JobStatus.ERROR,
-                error=str(e)
-            )
+            job_service.update_job(job_id, status=JobStatus.ERROR, error=str(e))
+
 
 generator = VideoGenerator()
+
 
 @router.post("/generate_loop_from_upload", dependencies=[Depends(require_api_key)])
 async def generate_video(
@@ -113,6 +112,7 @@ async def generate_video(
         },
     )
 
+
 @router.get("/job/{job_id}")
 async def get_job_status(job_id: str):
     job = job_service.get_job(job_id)
@@ -137,10 +137,8 @@ async def get_job_status(job_id: str):
             "height": result["height"],
         })
     
-    return JSONResponse(
-        content=response,
-        headers={"Cache-Control": "no-store"}
-    )
+    return JSONResponse(content=response, headers={"Cache-Control": "no-store"})
+
 
 @router.post("/warmup")
 async def warmup():
