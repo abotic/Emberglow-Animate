@@ -2,9 +2,8 @@
 
 > Production-ready bulk AI image generation for creators
 
-**[Demo Video Coming Soon]**
-
----
+### Emberglow Animate
+[![Emberglow Animate](https://img.youtube.com/vi/ocjdzqJXIoM/maxresdefault.jpg)](https://www.youtube.com/watch?v=ocjdzqJXIoM)
 
 ## What is this?
 
