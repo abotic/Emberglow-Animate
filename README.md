@@ -2,16 +2,13 @@
 
 > Production-ready bulk AI image generation for creators
 
-### Emberglow Animate
-[![Emberglow Animate](https://img.youtube.com/vi/ocjdzqJXIoM/maxresdefault.jpg)](https://www.youtube.com/watch?v=ocjdzqJXIoM)
-
 ## What is this?
 
 Emberglow Animate is a high-performance image generation service designed for content creators who need to generate large batches of high-quality images. Whether you're creating assets for long-form videos, marketing materials, or visual storytelling projects, this service handles everything from single images to 100+ batch generations with intelligent queuing, progress tracking, and consistent quality.
 
 Unlike basic SD wrappers, Emberglow is built specifically for **production workflows**. It intelligently groups requests by dimensions and settings, processes them efficiently with micro-batching, and gives you complete control over style, quality, and output format. Generate a single test image or queue up 500 scene illustrations—the system handles both.
 
-## Why did I build this?
+## What was the goal?
 
 Creating visual content at scale is expensive and time-consuming. Commercial AI image APIs charge per image ($0.02-0.10 each), which adds up fast when you need hundreds of images for a video project or content series. A typical long-form video might need 100-200 scene illustrations, costing $20-100+ per video with commercial services.
 
@@ -22,6 +19,13 @@ I wanted a self-hosted solution that could:
 - **Integrate easily** with existing creative workflows
 
 The result is a system that processes batch generations 3-5x faster than naive approaches, with full progress tracking and the ability to resume interrupted jobs.
+
+---
+
+### Demo video (click to start)
+[![Emberglow Animate](https://img.youtube.com/vi/ocjdzqJXIoM/maxresdefault.jpg)](https://www.youtube.com/watch?v=ocjdzqJXIoM)
+
+---
 
 ## Features
 
